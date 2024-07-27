@@ -69,3 +69,7 @@
     ```
 
 ---
+
+## Additional Information
+
+Geyser-Spigot is already set up with floodgate, ViaVersion, and ViaBackwards, allowing for cross-version joining.
