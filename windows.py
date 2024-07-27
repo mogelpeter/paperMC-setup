@@ -1,12 +1,25 @@
+import subprocess
+import sys
+
+# Funktion zur automatischen Installation von Paketen
+def install_packages():
+    required_packages = ['tkinter', 'json']
+    for package in required_packages:
+        try:
+            __import__(package)
+        except ImportError:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Pakete installieren
+install_packages()
+
 import tkinter as tk
 from tkinter import scrolledtext
 from tkinter import messagebox
-import subprocess
 import threading
 import os
 import io
 import json
-import platform
 
 class ServerControlApp:
     def __init__(self, root):
@@ -20,10 +33,10 @@ class ServerControlApp:
         self.version = self.get_minecraft_version()
         self.root.title(f"Server Control Panel - Minecraft Version {self.version}")
 
-        self.start_button = tk.Button(root, text="Start Server", command=self.start_server, bg='#61afef', fg='white')
+        self.start_button = tk.Button(root, text="Server Starten", command=self.start_server, bg='#61afef', fg='white')
         self.start_button.pack(pady=5)
 
-        self.stop_button = tk.Button(root, text="Stop Server", command=self.stop_server, bg='#e06c75', fg='white')
+        self.stop_button = tk.Button(root, text="Server Stoppen", command=self.stop_server, bg='#e06c75', fg='white')
         self.stop_button.pack(pady=5)
 
         tk.Label(root, text="Min RAM (GB):", bg='#282c34', fg='white').pack(pady=5)
@@ -39,7 +52,7 @@ class ServerControlApp:
         self.command_entry = tk.Entry(root, width=100, bg='#3e4451', fg='white')
         self.command_entry.pack(pady=5)
         
-        self.send_command_button = tk.Button(root, text="Send Command", command=self.send_command, bg='#98c379', fg='black')
+        self.send_command_button = tk.Button(root, text="Befehl Senden", command=self.send_command, bg='#98c379', fg='black')
         self.send_command_button.pack(pady=5)
 
         self.log_text = scrolledtext.ScrolledText(root, width=100, height=20, bg='#21252b', fg='white')
@@ -65,8 +78,8 @@ class ServerControlApp:
         if os.path.exists("version_history.json"):
             with open("version_history.json", "r") as f:
                 data = json.load(f)
-                return data.get("currentVersion", "Unknown")
-        return "Unknown"
+                return data.get("currentVersion", "Unbekannt")
+        return "Unbekannt"
 
     def create_start_script(self):
         min_ram = self.min_ram_entry.get() + "G"
@@ -87,29 +100,29 @@ pause
             with open(script_file, "w") as f:
                 f.write(start_script)
             self.process = subprocess.Popen(['cmd.exe', '/c', script_file], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            self.log_text.insert(tk.END, "Server started...\n", 'info')
+            self.log_text.insert(tk.END, "Server gestartet...\n", 'info')
             threading.Thread(target=self.read_output, args=(self.process.stdout,)).start()
             threading.Thread(target=self.read_output, args=(self.process.stderr,)).start()
         else:
-            messagebox.showwarning("Warning", "Server is already running!")
+            messagebox.showwarning("Warnung", "Server läuft bereits!")
 
     def stop_server(self):
         if self.process:
             self.process.kill()
             self.process.wait()
             self.process = None
-            self.log_text.insert(tk.END, "Server stopped...\n", 'info')
+            self.log_text.insert(tk.END, "Server gestoppt...\n", 'info')
         else:
-            messagebox.showwarning("Warning", "Server is not running!")
+            messagebox.showwarning("Warnung", "Server läuft nicht!")
 
     def send_command(self):
         command = self.command_entry.get()
         if self.process and self.process.stdin:
             self.process.stdin.write((command + '\n').encode('utf-8'))
             self.process.stdin.flush()
-            self.log_text.insert(tk.END, f"Command sent: {command}\n", 'command')
+            self.log_text.insert(tk.END, f"Befehl gesendet: {command}\n", 'command')
         else:
-            messagebox.showwarning("Warning", "Server is not running!")
+            messagebox.showwarning("Warnung", "Server läuft nicht!")
 
     def read_output(self, pipe):
         with io.TextIOWrapper(pipe, encoding='utf-8', errors='replace') as f:
