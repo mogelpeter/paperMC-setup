@@ -35,6 +35,10 @@
 
 *Note: In step 4, ensure that the folder with the server is indeed on the Desktop.*
 
+Windows.py GUI:
+
+![python_uigZmsZxJW](https://github.com/user-attachments/assets/47c033e7-5e4e-4cf3-bdee-e280f1933cc2)
+
 ---
 
 # Linux Installation Guide + How to install Ubuntu on Windows 
@@ -62,6 +66,7 @@
 2. Run the install script:
     ```sh
     ./install.sh
+
     ```
 3. Run the Python script:
     ```sh
