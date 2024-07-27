@@ -53,7 +53,7 @@
 
 ---
 
-## Install everything needed for the Ubuntu installation:
+## Install everything needed on the Ubuntu installation:
 
 1. Make the install script executable:
     ```sh
