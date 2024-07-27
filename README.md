@@ -1,7 +1,33 @@
 # Prebuild paperMC 1.20.6 Minecraft server
 
 
-# Installation Guide
+# Windows Installation Guide
+
+1. Open `Powershell.exe` and run:
+    ```sh
+    .\windows-setup.ps1
+    ```
+2. Restart your PC.
+3. Open `cmd.exe`.
+4. Navigate to the server folder (make sure it is on the Desktop):
+    ```sh
+    cd "C:\Users\XXX\Desktop\paperMC"
+    ```
+5. Run the Python script:
+    ```sh
+    python windows.py
+    ```
+    If the regular Python command does not work, try:
+    ```sh
+    python3 windows.py
+    ```
+
+---
+
+*Note: In step 4, ensure that the folder with the server is indeed on the Desktop.*
+
+
+# Linux Installation Guide + How to install Ubuntu on Windows 
 
 ## Install Windows Linux Subsystem + Ubuntu 22.04 on your Windows PC:
 
@@ -33,28 +59,3 @@
     ```
 
 ---
-
-## Install everything needed on Windows:
-
-1. Open `Powershell.exe` and run:
-    ```sh
-    .\windows-setup.ps1
-    ```
-2. Restart your PC.
-3. Open `cmd.exe`.
-4. Navigate to the server folder (make sure it is on the Desktop):
-    ```sh
-    cd "C:\Users\XXX\Desktop\paperMC"
-    ```
-5. Run the Python script:
-    ```sh
-    python windows.py
-    ```
-    If the regular Python command does not work, try:
-    ```sh
-    python3 windows.py
-    ```
-
----
-
-*Note: In step 4, ensure that the folder with the server is indeed on the Desktop.*
