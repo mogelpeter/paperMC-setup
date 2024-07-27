@@ -30,8 +30,10 @@
 
 *Note: In step 4, ensure that the folder with the server is indeed on the Desktop.*
 
+---
+---
 
-## Linux Installation Guide + How to install Ubuntu on Windows 
+# Linux Installation Guide + How to install Ubuntu on Windows 
 
 ## Install Windows Linux Subsystem + Ubuntu 22.04 on your Windows PC:
 
