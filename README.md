@@ -4,10 +4,11 @@
 
 ![Discord](https://dcbadge.limes.pink/api/shield/741265873779818566?compact=true)
 
-## Important Files for installation on both OS are foun in this folder:
+## Important Files for installation on both OS are found in this folder:
 
 - "paperMC-setup\install-scripts"
 
+---
 
 ## Windows Installation Guide
 
@@ -34,7 +35,6 @@
 
 *Note: In step 4, ensure that the folder with the server is indeed on the Desktop.*
 
----
 ---
 
 # Linux Installation Guide + How to install Ubuntu on Windows 
