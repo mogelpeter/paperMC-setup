@@ -23,7 +23,16 @@ def get_minecraft_version():
             return data.get("currentVersion", "Unknown")
     return "Unknown"
 
-def create_start_script(min_ram, max_ram):
+def find_java_path():
+    java_path = ""
+    try:
+        java_path = subprocess.check_output(["which", "java"]).decode("utf-8").strip()
+        java_path = os.path.dirname(java_path)
+    except subprocess.CalledProcessError:
+        print("Java not found in the system PATH.")
+    return java_path
+
+def create_start_script(min_ram, max_ram, java_dir):
     start_script = f"""
 #!/bin/sh
 server_name="server"
@@ -34,7 +43,7 @@ max_memory="{max_ram}"
 server_port="" # std - 25565
 force_chunks_upgrade=false
 
-java_dir=""
+java_dir="{java_dir}"
 profiling=false # JDK profiling (reduces performance)
 fix_java_12_issues=false
 debugging_port="" # if none - debugging is off
@@ -54,7 +63,11 @@ if [ "$1" != "screen" ]; then
     exit
 fi
 
-[ "$java_dir" != "" ] && java_dir="${{java_dir}}/"
+if [ "$java_dir" != "" ]; then
+    java_cmd="${{java_dir}}/java"
+else
+    java_cmd="java"
+fi
 
 jvm_flags="${{jvm_flags}} ${{aikar_jvm_flags}}"
 if [ "$profiling" = true ]; then
@@ -75,7 +88,7 @@ jvm_flags="-D_server=${{htop_name}} -Xms${{min_memory}} -Xmx${{max_memory}} ${{j
 
 while true
 do
-    eval ${java_dir}java ${{jvm_flags}} -jar ${{jar_file}} ${{app_flags}}
+    eval $java_cmd ${{jvm_flags}} -jar ${{jar_file}} ${{app_flags}}
     echo "Server ${{screen_name}} stopped. Rebooting in:"
     for i in {{3..1}}
     do
@@ -88,7 +101,8 @@ done
 
 def start_server():
     min_ram, max_ram = load_server_properties()
-    start_script = create_start_script(min_ram, max_ram)
+    java_dir = find_java_path()
+    start_script = create_start_script(min_ram, max_ram, java_dir)
     script_file = "start_temp.sh"
     with open(script_file, "w") as f:
         f.write(start_script)
